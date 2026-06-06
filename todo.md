@@ -1,0 +1,3 @@
+--> Label above shop showing bread icon with stock no.
+--> Different trait ducks 
+--> Taxes + Gov Money

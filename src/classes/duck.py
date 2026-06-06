@@ -41,6 +41,7 @@ class Duck:
             if self.hunger < 40:
                 self.money -= 5
                 nearest_shop.stock -= 1
+                print("nearest shop stock:", nearest_shop.stock)
                 nearest_shop.money += 5
                 self.hunger += 50
 
@@ -54,13 +55,8 @@ class Duck:
         self.x += dx / distance * speed
         self.y += dy / distance * speed
 
-    def draw(self, screen):
-        pygame.draw.circle(
-        screen,
-        (255, 255, 0*self.hunger/100),  # Color changes based on hunger
-        (int(self.x), int(self.y)),
-        10
-    )
+    def draw(self, screen, duckimage):
+        screen.blit(duckimage, (int(self.x), int(self.y)))
 
     # On Frame
     def update(self, breadshops):
