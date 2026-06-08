@@ -12,27 +12,39 @@ class Duck:
         self.target_x = random.randint(0, 500)
         self.target_y = random.randint(0, 500)
 
+        self.target_shop = None
+
         self.x = x
         self.y = y
 
         self.angle = 0
 
+        # ---- Personality Traits ---- #
+        self.speed = random.uniform(0.5, 1.5)
+        self.appetite = random.uniform(0.8, 1.2)
         self.job = "Unemployed"
+        self.age = 0
 
     def move(self, breadshops):
 
         # Hungry ducks seek food
         if self.hunger < 40 and breadshops:
 
-            nearest_shop = min(
-                breadshops,
-                key=lambda shop:
-                    (shop.x - self.x) ** 2 +
-                    (shop.y - self.y) ** 2
-            )
+            available_shops = [
+                shop for shop in breadshops
+                if shop.stock > 0
+            ]
 
-            self.target_x = nearest_shop.x
-            self.target_y = nearest_shop.y
+            if available_shops:
+                nearest_shop = min(
+                    available_shops,
+                    key=lambda shop:
+                        (shop.x - self.x) ** 2 +
+                        (shop.y - self.y) ** 2
+                )
+
+                self.target_x = nearest_shop.x
+                self.target_y = nearest_shop.y
 
         dx = self.target_x - self.x
         dy = self.target_y - self.y
@@ -56,7 +68,7 @@ class Duck:
 
             return
 
-        speed = 1
+        speed = 1 * self.speed
 
         self.x += dx / distance * speed
         self.y += dy / distance * speed
@@ -67,9 +79,27 @@ class Duck:
     # On Frame
     def update(self, breadshops):
 
-        self.hunger -= 0.2
+        self.hunger -= 0.2 * self.appetite
 
         if self.hunger < 0:
             self.hunger = 0
 
         self.move(breadshops)
+
+    def get_rect(self):
+        return pygame.Rect(
+            self.x,
+            self.y,
+            48,  # duck width
+            48   # duck height
+        )
+    
+    def show_stats(self, screen):
+        pygame.draw.rect(screen, (0, 0, 0), (self.x, self.y +50, 50, 80))
+
+    def accessory(self, screen, tophatimage):
+        if self.money >= 100:
+            screen.blit(
+                tophatimage,
+                (int(self.x), int(self.y))
+            )

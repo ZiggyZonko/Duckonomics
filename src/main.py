@@ -21,6 +21,7 @@ day = 1
 day_timer = 0
 day_length = 30  # seconds
 population = len(ducks)
+selected_duck = None
 
 # ---- Sprites ---- #
 duck_image = pygame.image.load("assets/duck.png").convert_alpha()
@@ -30,6 +31,8 @@ scaled_shop = pygame.transform.scale(shop_image, (30, 30))
 wave_image = pygame.image.load("assets/wave.png").convert_alpha()
 bread_image = pygame.image.load("assets/bread.png").convert_alpha()
 scaled_bread = pygame.transform.scale(bread_image, (20, 20))
+tophat_image = pygame.image.load("assets/tophat.png").convert_alpha()
+tophat_scaled = pygame.transform.scale(tophat_image, (20, 20))
 dayfont = pygame.font.SysFont(None, 24)
 
 # ---- Generating Objects ---- #
@@ -41,7 +44,7 @@ for i in range(5):
     )
     print(f"Created {breadshops[-1].name} at ({breadshops[-1].x}, {breadshops[-1].y})")
 
-for _ in range(20):
+for _ in range(40):
     ducks.append(
         Duck(
             random.randint(0, 500),
@@ -71,12 +74,17 @@ while True:
 
     screen.fill((7, 138, 255))  # Clear screen to black
 
+    # ---- Statistics Box ---- #
+    if selected_duck:
+        selected_duck.show_stats(screen)
+
     # ---- Loops for Objects ---- #
     for wave in waves:
         screen.blit(wave_image, (wave[0], wave[1]))
 
     for duck in ducks[:]:
         duck.update(breadshops)
+        duck.accessory(screen, tophat_scaled)
 
         if not duck.alive:
             ducks.remove(duck)
@@ -121,7 +129,18 @@ while True:
 
     pygame.display.update()
 
+    # ---- Click Detection ---- #
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
+
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: # 1 is Left Click
+
+            for duck in ducks:
+                if duck.get_rect().collidepoint(event.pos):
+                    
+                    print("Duck clicked!")
+                    print(f"Age: {duck.age}")
+                    print(f"Appetite: {duck.appetite:.2f}")
+                    selected_duck = duck
