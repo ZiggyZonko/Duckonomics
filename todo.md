@@ -1,3 +1,3 @@
---> Label above shop showing bread icon with stock no.
+--> Add Duck direction so it turns to target (try without ai)
 --> Different trait ducks 
 --> Taxes + Gov Money

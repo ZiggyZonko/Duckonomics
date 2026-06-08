@@ -1,17 +1,21 @@
+import math
 import random
 import pygame
-from classes.shop import BreadShop
+from classes.bakery import BreadShop
 
 class Duck:
     def __init__(self, x, y):
-        self.money = 100
+        self.money = random.randint(0, 200)
         self.hunger = 100
+        self.alive = True
 
         self.target_x = random.randint(0, 500)
         self.target_y = random.randint(0, 500)
 
         self.x = x
         self.y = y
+
+        self.angle = 0
 
         self.job = "Unemployed"
 
@@ -35,15 +39,17 @@ class Duck:
 
         distance = (dx ** 2 + dy ** 2) ** 0.5
 
+        if self.hunger <= 0 and self.money < nearest_shop.price:
+            print("A duck has starved to death")
+            self.alive = False
+
         if distance < 5:
 
             # Buy food if we're at a shop
-            if self.hunger < 40:
-                self.money -= 5
-                nearest_shop.stock -= 1
-                print("nearest shop stock:", nearest_shop.stock)
-                nearest_shop.money += 5
-                self.hunger += 50
+            if self.hunger < 40 and self.money >= 5:
+                if nearest_shop.sell_bread():
+                    self.money -= 5
+                    self.hunger += 50
 
             self.target_x = random.randint(0, 500)
             self.target_y = random.randint(0, 500)
@@ -61,7 +67,7 @@ class Duck:
     # On Frame
     def update(self, breadshops):
 
-        self.hunger -= 0.02
+        self.hunger -= 0.2
 
         if self.hunger < 0:
             self.hunger = 0
