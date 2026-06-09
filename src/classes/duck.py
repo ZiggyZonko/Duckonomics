@@ -2,6 +2,8 @@ import math
 import random
 import pygame
 from classes.bakery import BreadShop
+from constants import *
+from classes.government import *
 
 class Duck:
     def __init__(self, x, y):
@@ -9,8 +11,8 @@ class Duck:
         self.hunger = 100
         self.alive = True
 
-        self.target_x = random.randint(0, 500)
-        self.target_y = random.randint(0, 500)
+        self.target_x = random.randint(0, SCREEN_WIDTH)
+        self.target_y = random.randint(0, SCREEN_HEIGHT)
 
         self.target_shop = None
 
@@ -20,10 +22,15 @@ class Duck:
         self.angle = 0
 
         # ---- Personality Traits ---- #
+        self.name = (random.choice(FIRST_NAMES) + " " + random.choice(LAST_NAMES))
         self.speed = random.uniform(0.5, 1.5)
         self.appetite = random.uniform(0.8, 1.2)
-        self.job = "Unemployed"
-        self.age = 0
+        self.job = random.choice(list(JOBS.keys()))
+        self.age = 6
+        self.happiness = 50
+        self.hadChild = False
+        self.generation = 1
+        self.Parent = "Mysterious Universe..."
 
     def move(self, breadshops):
 
@@ -62,9 +69,10 @@ class Duck:
                 if nearest_shop.sell_bread():
                     self.money -= 5
                     self.hunger += 50
+                    self.happiness += 10
 
-            self.target_x = random.randint(0, 500)
-            self.target_y = random.randint(0, 500)
+            self.target_x = random.randint(0, SCREEN_WIDTH)
+            self.target_y = random.randint(0, SCREEN_HEIGHT)
 
             return
 
@@ -79,7 +87,7 @@ class Duck:
     # On Frame
     def update(self, breadshops):
 
-        self.hunger -= 0.2 * self.appetite
+        self.hunger -= HUNGER_RATE * self.appetite
 
         if self.hunger < 0:
             self.hunger = 0
@@ -94,12 +102,68 @@ class Duck:
             48   # duck height
         )
     
-    def show_stats(self, screen):
-        pygame.draw.rect(screen, (0, 0, 0), (self.x, self.y +50, 50, 80))
+    def show_stats(self, screen, font):
+        pygame.draw.rect(screen, (255, 255, 255), (self.x, self.y +50, 50, 80))
+        appetitetext = font.render(f"A: {math.ceil(self.appetite)}", True, (255, 255, 255))
+        screen.blit(appetitetext, (self.x, self.y))
 
     def accessory(self, screen, tophatimage):
         if self.money >= 100:
             screen.blit(
                 tophatimage,
-                (int(self.x), int(self.y))
+                (int(self.x+8), int(self.y-8))
             )
+
+    def birth(self, table, death_table):
+        if (self.money > 100 and self.happiness > 30 and self.age > 5):
+            if (random.random() < BIRTH_RATE and len(table)+1 <= POPULATION_MAX):
+                #if(self.hadChild == False):
+
+                    baby = Duck(
+                        int(self.x),
+                        int(self.y)
+                    )
+                    baby.generation = self.generation+1
+                    baby.parent = self.name
+                    baby.speed = self.speed + random.uniform(-0.1, 0.1)
+                    baby.appetite = self.appetite + random.uniform(-0.1, 0.1)
+                    baby.money = (self.money / 2)
+
+                    surname = self.name.split()[1]
+
+                    baby.name = (
+                        random.choice(FIRST_NAMES) + " " + surname
+                    )
+                    table.append(baby)
+
+                    print("A beautiful duckling is born")
+                    #self.hadChild = True
+
+        if (self.age >=LIFESPAN):
+            death_table.append(
+                {
+                    "name": self.name,
+                    "age": self.age,
+                    "job": self.job
+                }
+            )
+
+            print("Died from old age")
+            self.alive = False
+
+        if random.random() < DEATH_CHANCE:
+            death_table.append(
+                {
+                    "name": self.name,
+                    "age": self.age,
+                    "job": self.job
+                }
+            )
+
+            print("Died from natural causes")
+            self.alive = False
+
+    def work(self, government):
+        wage = JOBS[self.job]
+
+        self.money += government.collect_income_tax(wage)

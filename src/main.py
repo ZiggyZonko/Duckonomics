@@ -1,20 +1,24 @@
 import pygame
 import random
+from constants import *
 
 # ---- Classes ---- #
 from classes.duck import Duck
 from classes.bakery import BreadShop
+from classes.government import Government
 
 # ---- Pygame Initialization ---- #
 pygame.init()
 clock = pygame.time.Clock()
-screen = pygame.display.set_mode((500, 500))
+screen = pygame.display.set_mode((1000,1000))
 pygame.display.set_caption("🦆 Duckonomics")
 
 # ---- Object Arrays ---- #
 ducks = []
 breadshops = []
 waves = []
+dead_ducks = []
+government = Government()
 
 # ---- Variables ---- #
 day = 1
@@ -47,8 +51,8 @@ for i in range(5):
 for _ in range(40):
     ducks.append(
         Duck(
-            random.randint(0, 500),
-            random.randint(0, 500)
+            random.randint(0, SCREEN_WIDTH),
+            random.randint(0, SCREEN_HEIGHT)
         )
     )
 
@@ -56,16 +60,16 @@ for _ in range(40):
 for _ in range(10):
     waves.append(
         (
-            random.randint(0, 500),
-            random.randint(0, 500)
+            random.randint(0, SCREEN_WIDTH),
+            random.randint(0, SCREEN_HEIGHT)
         )
     )
 
 for _ in range(5):
     waves.append(
         (
-            random.randint(0, 500),
-            random.randint(0, 500)
+            random.randint(0, SCREEN_WIDTH),
+            random.randint(0, SCREEN_HEIGHT)
         )
     )
 
@@ -75,8 +79,8 @@ while True:
     screen.fill((7, 138, 255))  # Clear screen to black
 
     # ---- Statistics Box ---- #
-    if selected_duck:
-        selected_duck.show_stats(screen)
+    #if selected_duck:
+        #selected_duck.show_stats(screen, dayfont)
 
     # ---- Loops for Objects ---- #
     for wave in waves:
@@ -115,14 +119,23 @@ while True:
             )
 
         day += 1
+
+        for duck in ducks[:]:
+            duck.birth(ducks, dead_ducks)
+            duck.work(government)
+
+        duck.age+=2
         day_timer = 0
 
         print(f"Day {day} has begun!")
+        print(f"Obituary: " + str([dead_ducks]))
     
     # ---- UI ---- #
     day_text = dayfont.render(f"Day {day}", True, (255, 255, 255))
     time_of_day_text = dayfont.render(f"Time: {int(hour * 24)}:00", True, (255, 255, 255))
     population_text = dayfont.render(f"Population: {len(ducks)}", True, (255, 255, 255))
+    treasurey_text = dayfont.render(f"Treasury: ${government.money}", True, (255, 255, 255))
+    screen.blit(treasurey_text, (10, 70))
     screen.blit(population_text, (10, 50))
     screen.blit(time_of_day_text, (10, 30))
     screen.blit(day_text, (10, 10))
@@ -141,6 +154,10 @@ while True:
                 if duck.get_rect().collidepoint(event.pos):
                     
                     print("Duck clicked!")
+                    print(f"Name: {duck.name}")
                     print(f"Age: {duck.age}")
                     print(f"Appetite: {duck.appetite:.2f}")
+                    print(f"Money: {duck.money:.2f}")
+                    print(f"Happiness: {duck.happiness:.2f}")
+                    print(f"Job: {duck.job}")
                     selected_duck = duck

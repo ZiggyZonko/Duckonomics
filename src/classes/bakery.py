@@ -1,14 +1,14 @@
 import random
 import pygame
 from sklearn.linear_model import LinearRegression
-
+from constants import *
 
 class BreadShop:
     def __init__(self, name):
         self.name = name
 
-        self.x = random.randint(50, 450)
-        self.y = random.randint(50, 450)
+        self.x = random.randint(0, SCREEN_WIDTH)
+        self.y = random.randint(0, SCREEN_HEIGHT)
 
         self.stock = 100
         self.money = 0
