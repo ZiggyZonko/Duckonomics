@@ -7,7 +7,7 @@ from classes.government import *
 
 class Duck:
     def __init__(self, x, y):
-        self.money = random.randint(0, 200)
+        self.money = random.randint(0, 2000)
         self.hunger = 100
         self.alive = True
 
@@ -30,7 +30,7 @@ class Duck:
         self.happiness = 50
         self.hadChild = False
         self.generation = 1
-        self.Parent = "Mysterious Universe..."
+        self.parent = "Mysterious Universe..."
 
     def move(self, breadshops):
 
@@ -107,12 +107,21 @@ class Duck:
         appetitetext = font.render(f"A: {math.ceil(self.appetite)}", True, (255, 255, 255))
         screen.blit(appetitetext, (self.x, self.y))
 
-    def accessory(self, screen, tophatimage):
-        if self.money >= 100:
-            screen.blit(
-                tophatimage,
-                (int(self.x+8), int(self.y-8))
-            )
+    def accessory(self, screen, accessories):
+
+        for wealth, image in sorted(
+            accessories.items(),
+            reverse=True
+        ):
+
+            if self.money >= wealth:
+
+                screen.blit(
+                    image,
+                    (int(self.x + 8), int(self.y - 8))
+                )
+
+                break
 
     def birth(self, table, death_table):
         if (self.money > 100 and self.happiness > 30 and self.age > 5):

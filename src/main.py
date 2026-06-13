@@ -43,9 +43,20 @@ bread_image = pygame.image.load("assets/bread.png").convert_alpha()
 scaled_bread = pygame.transform.scale(bread_image, (20, 20))
 tophat_image = pygame.image.load("assets/tophat.png").convert_alpha()
 tophat_scaled = pygame.transform.scale(tophat_image, (20, 20))
+graduation_cap = pygame.image.load("assets/graduation_cap.png").convert_alpha()
+gradcap_scaled = pygame.transform.scale(graduation_cap, (30, 30))
+crown_image = pygame.image.load("assets/crown.png").convert_alpha()
+crown_scaled = pygame.transform.scale(crown_image, (20, 20))
 dayfont = pygame.font.SysFont(None, 24)
 title_font = pygame.font.SysFont(None, 72)
 button_font = pygame.font.SysFont(None, 48)
+
+# ---- Duck Accessories --- #
+accessories = {
+    1000: crown_scaled,
+    500: gradcap_scaled,
+    100: tophat_scaled
+}
 
 # ---- Main Menu Buttons ---- #
 start_button = pygame.Rect(
@@ -218,7 +229,7 @@ while True:
 
         for duck in ducks[:]:
             duck.update(breadshops)
-            duck.accessory(screen, tophat_scaled)
+            duck.accessory(screen, accessories)
 
             if not duck.alive:
                 ducks.remove(duck)

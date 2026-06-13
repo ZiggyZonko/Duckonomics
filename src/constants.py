@@ -43,6 +43,12 @@ JOBS = {
     "Unemployed": 0
 }
 
+ACCESSORY_LEVELS = [
+    1000,
+    500,
+    100
+]
+
 # ---- VARIABLES ---- #
 DEATH_CHANCE = 0.01
 LIFESPAN = 100
