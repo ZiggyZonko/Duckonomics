@@ -100,9 +100,7 @@ The bakery records:
     Bread price
     Daily sales
 
-Using this data, it predicts future demand and automatically adjusts production.
-
-This allows bakeries to respond dynamically as the economy changes.
+Using this data, it predicts future demand and automatically adjusts based on prediction or stock changes the day before.
 
 **Screenshots**
 **Main Menu**
