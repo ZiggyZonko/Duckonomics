@@ -1,8 +1,11 @@
 import pygame
 import random
 from constants import *
-import discordrpc
 import tkinter as tk
+from path import *
+import os
+print(os.getcwd())
+import sys
 
 # ---- Classes ---- #
 from classes.duck import Duck
@@ -34,18 +37,18 @@ selected_duck = None
 game_state = "menu"
 
 # ---- Sprites ---- #
-duck_image = pygame.image.load("assets/duck.png").convert_alpha()
+duck_image = pygame.image.load(resource_path("assets/duck.png")).convert_alpha()
 duck_scaled = pygame.transform.scale(duck_image, (48, 48))
-shop_image = pygame.image.load("assets/shop.png").convert_alpha()
+shop_image = pygame.image.load(resource_path("assets/shop.png")).convert_alpha()
 scaled_shop = pygame.transform.scale(shop_image, (30, 30))
-wave_image = pygame.image.load("assets/wave.png").convert_alpha()
-bread_image = pygame.image.load("assets/bread.png").convert_alpha()
+wave_image = pygame.image.load(resource_path("assets/wave.png")).convert_alpha()
+bread_image = pygame.image.load(resource_path("assets/bread.png")).convert_alpha()
 scaled_bread = pygame.transform.scale(bread_image, (20, 20))
-tophat_image = pygame.image.load("assets/tophat.png").convert_alpha()
+tophat_image = pygame.image.load(resource_path("assets/tophat.png")).convert_alpha()
 tophat_scaled = pygame.transform.scale(tophat_image, (20, 20))
-graduation_cap = pygame.image.load("assets/graduation_cap.png").convert_alpha()
+graduation_cap = pygame.image.load(resource_path("assets/graduation_cap.png")).convert_alpha()
 gradcap_scaled = pygame.transform.scale(graduation_cap, (30, 30))
-crown_image = pygame.image.load("assets/crown.png").convert_alpha()
+crown_image = pygame.image.load(resource_path("assets/crown.png")).convert_alpha()
 crown_scaled = pygame.transform.scale(crown_image, (20, 20))
 dayfont = pygame.font.SysFont(None, 24)
 title_font = pygame.font.SysFont(None, 72)
@@ -245,7 +248,7 @@ while True:
         day_timer += dt
         hour = (day_timer / day_length)
 
-        if day_timer >= day_length and duck.alive:
+        if day_timer >= day_length and len(ducks) > 0:
 
             avg_hunger = (
                 sum(duck.hunger for duck in ducks)
@@ -289,7 +292,7 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
-            exit()
+            sys.exit()
 
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1: # 1 is Left Click
 
@@ -304,7 +307,7 @@ while True:
 
                     pygame.quit()
                     
-                    exit()
+                    sys.exit()
 
             if game_state == "game":
 
