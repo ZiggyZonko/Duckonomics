@@ -1,18 +1,22 @@
 # 🦆 Duckonomics
 
-A machine-learning-powered economic simulator where ducks live, work, eat, pay taxes, start families, and influence a growing economy.
+(Imported the video and got rid of unnecessary components of the readme while providing some summarising points in regards to how it works)
 
-Watch a society of ducks evolve as businesses adapt to demand, citizens earn wages, governments collect taxes, and populations rise or fall based on economic conditions.
+Duckonomics is my silly idea of a society of well-civilised ducks, working to provide bread to themselves and raised families. The silly idea spirralled into a full pygame simulation with my discovering of a new hackclub campaign, Stardance!!! The idea matches some of my previous projects, not yet finished, eg. QuackyGrammer, DuckyPaste, DuckMail etc. 
+
+Every duck in the simulation has it's own class, with it's own individual unique name, age, amount of money, hunger, happiness. Based off these stats, they raise children, work, pay taxes, buy food, grow old and eventually die 😢
+
+Here is some summarised dot points regarding the game!
 
 **Features:**
 
-    🦆 Autonomous duck citizens
+    🦆 Duck citizens
     
-    🍞 AI-powered bakeries that predict demand
+    🍞 Machine Learning powered bakeries that predict demand
     
     💰 Jobs and wages
     
-    🏛️ Government taxation system
+    🏛️ Government taxing
     
     👶 Population growth and aging
     
@@ -20,11 +24,7 @@ Watch a society of ducks evolve as businesses adapt to demand, citizens earn wag
     
     🎩 Cosmetic accessories based on wealth
     
-    📈 Economic statistics and treasury tracking
-    
     🧠 Machine learning using Scikit-Learn
-    
-    🌊 Animated world with interactive duck inspection
 
 **Supported Platforms:**
 
@@ -52,55 +52,14 @@ If macOS prevents the application from opening:
     Open System Settings → Privacy & Security.
     Scroll down to the security warning.
     Click Open Anyway.
-    Confirm when prompted.
 
 If running from source, use:
 
     python3 src/main.py
 
-**Controls 🕹️**
-
-Control	Action
-Right Click Duck --> View duck statistics
-Start Game Button --> 	Begin simulation
-Quit Game Button -->	Exit game
-
-**Gameplay**
-
-Each duck has:
-
-    A name
-    Age
-    Appetite
-    Happiness
-    Job
-    Money
-
-**Ducks will:**
-
-    Work and earn wages.
-    Pay taxes.
-    Purchase food from bakeries.
-    Grow older.
-    Have children.
-    Die from starvation, old age, or natural causes.
-
-Businesses use machine learning to predict future demand and manage stock accordingly.
-
 **Machine Learning**
 
-Duckonomics uses:
-
-    Linear Regression
-
-The bakery records:
-
-    Population
-    Average hunger
-    Bread price
-    Daily sales
-
-Using this data, it predicts future demand and automatically adjusts based on prediction or stock changes the day before.
+Duckonomics uses Linear Regression to analyse the data and predict the stock needed for upcoming days based on recorded average hunger, population changes, sales per day etc. (You can see in the table below)
 
 **Screenshots**
 **Main Menu**
@@ -121,19 +80,10 @@ Using this data, it predicts future demand and automatically adjusts based on pr
 
 **Gameplay Video**
 
-Linked as a file in the github...
-
-Future Plans
-
-    🐟 Fish Markets
-    🏠 Housing System
-    🧬 Genealogy & Family Trees
-    🗳️ Elections
-    📊 Economic Graphs
-    🤖 Advanced Business AI
-    🏪 Multiple Shop Types
-    📈 Dynamic Pricing
+https://github.com/user-attachments/assets/78926612-342c-4240-82a7-d6235bf1d53b
 
 Author:
 
 Created by Zachary Lindley / ZiggyZonko / PhiDuck
+
+Quack Out Hackers, thanks for checking my project! 🦆
