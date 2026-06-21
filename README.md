@@ -1,6 +1,6 @@
 # 🦆 Duckonomics
 
-(Imported the video and got rid of unnecessary components of the readme while providing some summarising points in regards to how it works, Installation points are kept the same because no need to change.)
+(Imported the video and got rid of unnecessary components of the readme while providing some summarising points in regards to how it works, Installation points are kept the same because no need to change. Please Shippppp 🚢⚓)
 
 Duckonomics is my silly idea of a society of well-civilised ducks, working to provide bread to themselves and raised families. The silly idea spirralled into a full pygame simulation with my discovering of a new hackclub campaign, Stardance!!! The idea matches some of my previous projects, not yet finished, eg. QuackyGrammer, DuckyPaste, DuckMail etc. 
 
